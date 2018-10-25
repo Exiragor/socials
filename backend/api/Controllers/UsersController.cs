@@ -121,5 +121,12 @@ namespace api.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        // GET: api/users/5/tasks
+        [HttpGet("{id}/tasks")]
+        public ActionResult<IEnumerable<string>> GetUsersTasks([FromRoute] int id)
+        {
+            return new string[] { "value5", $"value{id}" };
+        }
     }
 }

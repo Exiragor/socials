@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace api.Models
 {
@@ -8,7 +9,13 @@ namespace api.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public DateTime? BirthDate { get; set; }
         private string Password { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string Role { get; set; }
+
+        public void SetPassword (string password)
+        {
+            Password = password;
+        }
     }
 }
