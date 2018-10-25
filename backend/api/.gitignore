@@ -265,5 +265,8 @@ paket-files/
 __pycache__/
 *.pyc
 
+# Hide production config
+appsettings.Production.json
+
 # Cake - Uncomment if you are using it
 # tools/
