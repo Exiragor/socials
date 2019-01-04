@@ -11,7 +11,7 @@ import { ApolloError } from "apollo-server-express"
 import { User } from "../../entity/User"
 import { MyContext } from "../../types/Context"
 import { getUserRepository, UserRepository } from "../../repositories/UserRepository"
-import { prepareRegistrationDataToSave } from "./helpers"
+import { prepareRegistrationDataToSave, checkPassword, generateAccessTokenSecret } from "./helpers"
 import errorsBook from "../../books/errors"
 import { getAppLang } from "../../books/lang"
   
@@ -60,6 +60,33 @@ export class UserResolver {
         await this._repository.save(user)
 
         return user.id
+    }
+    
+    @Mutation(() => User)
+    async login(
+        @Arg("username") username: String,
+        @Arg("password") password: String,
+
+        @Ctx() ctx: MyContext,
+    ) {
+        let user: User | null = await this._repository.findOne({ username: username.toString() }) || null
+        if (!user) {
+            const currError = errorsBook.login.userInNotFfound
+            const currLang = getAppLang(ctx)
+            return new ApolloError(currError.message[currLang], currError.code)
+        }
+        // TODO: fix checkpass: always true
+        const passCorrect = checkPassword(password.toString(), user.password)
+        if (!passCorrect) {
+            const currError = errorsBook.login.passwordIncorrect
+            const currLang = getAppLang(ctx)
+            return new ApolloError(currError.message[currLang], currError.code)
+        }
+        // TODO: fix problem: accessToken is empty in graph response
+        user = await generateAccessTokenSecret(user)
+        this._repository.save(user)
+        console.log(user)
+        return user
     }
   
     @Query(() => User, { nullable: true })

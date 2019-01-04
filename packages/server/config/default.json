@@ -17,5 +17,6 @@
             "migrationsDir": "src/migration",
             "subscribersDir": "src/subscriber"
         }
-    }
+    },
+    "secretKey": "secret"
 }
