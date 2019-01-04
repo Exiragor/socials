@@ -7,10 +7,13 @@ import {
     Mutation,
     Authorized,
 } from "type-graphql"
+import { ApolloError } from "apollo-server-express"
 import { User } from "../../entity/User"
 import { MyContext } from "../../types/Context"
 import { getUserRepository, UserRepository } from "../../repositories/UserRepository"
 import { prepareRegistrationDataToSave } from "./helpers"
+import errorsBook from "../../books/errors"
+import { getAppLang } from "../../books/lang"
   
 @Resolver(User)
 export class UserResolver {
@@ -43,9 +46,17 @@ export class UserResolver {
         @Arg("password") password: String,
         @Arg("firstname") firstname: String,
         @Arg("lastname") lastname: String,
+
+        @Ctx() ctx: MyContext
     ) {
         let user = await this._repository.create()
         user = await prepareRegistrationDataToSave(user, { username, email, password, firstname, lastname})
+        if (this._repository.isUserExists(user.username, user.email)) {
+            const currError = errorsBook.registration.userExists
+            const currLang = getAppLang(ctx)
+            return new ApolloError(currError.message[currLang], currError.code)
+        }
+
         await this._repository.save(user)
 
         return user.id

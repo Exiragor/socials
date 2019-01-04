@@ -5,6 +5,7 @@ import { buildSchema } from "type-graphql"
 import * as cors from "cors"
 import { createTypeormConn } from "./createTypeormConn"
 import { userLoader } from "./loaders/userLoader"
+import lang from "./books/lang"
 
 const startServer = async () => {
   const dbConn = await createTypeormConn()
@@ -21,8 +22,10 @@ const startServer = async () => {
         return context.req.headers && context.req.headers.authorization // or false if access denied
       },
     }),
-    context: ({ req }: any) => ({
+    context: ({ req, res }: any) => ({
       req,
+      res,
+      lang,
       userLoader: userLoader()
     }),
     formatError: (error: GraphQLError) => {
