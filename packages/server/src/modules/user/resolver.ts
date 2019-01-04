@@ -7,10 +7,10 @@ import {
     Mutation,
     Authorized,
 } from "type-graphql"
-import * as bcrypt from "bcrypt"
 import { User } from "../../entity/User"
 import { MyContext } from "../../types/Context"
 import { getUserRepository, UserRepository } from "../../repositories/UserRepository"
+import { prepareRegistrationDataToSave } from "./helpers"
   
 @Resolver(User)
 export class UserResolver {
@@ -39,16 +39,13 @@ export class UserResolver {
     @Mutation(() => String)
     async registration(
         @Arg("username") username: String,
+        @Arg("email") email: String,
         @Arg("password") password: String,
         @Arg("firstname") firstname: String,
         @Arg("lastname") lastname: String,
     ) {
-        const user = await this._repository.create()
-        
-        user.username = username.toString()
-        if (firstname) user.firstname = firstname.toString()
-        if (lastname) user.lastname = lastname.toString()
-        user.password = await bcrypt.hash(password, 10)
+        let user = await this._repository.create()
+        user = await prepareRegistrationDataToSave(user, { username, email, password, firstname, lastname})
 
         await this._repository.save(user)
 
@@ -56,12 +53,16 @@ export class UserResolver {
     }
   
     @Query(() => User, { nullable: true })
-    async me(
-        @Ctx()
-        ctx: MyContext
-    ) {
-        console.log(ctx.userLoader.load("1"))
+    async me() {
         const userId = "1"
-        return userId ? this._repository.findOne(userId) : null
+        return userId ? await this._repository.findOne(userId) : null
+    }
+
+    @Query(() => Boolean)
+    async isUserExist(
+        @Arg("username") username: String,
+        @Arg("email") email: String,
+    ) {
+        return this._repository.isUserExist(username.toString(), email.toString())
     }
 }

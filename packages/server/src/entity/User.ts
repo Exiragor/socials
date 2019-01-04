@@ -16,6 +16,10 @@ export class User {
     @Column({ unique: true })
     username: string
 
+    @Field()
+    @Column({ unique: true })
+    email: string
+
     @Field(() => String, { nullable: true })
     @Column({ nullable: true })
     firstname: string
