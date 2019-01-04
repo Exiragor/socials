@@ -46,7 +46,6 @@ export class UserResolver {
     ) {
         let user = await this._repository.create()
         user = await prepareRegistrationDataToSave(user, { username, email, password, firstname, lastname})
-
         await this._repository.save(user)
 
         return user.id
@@ -63,6 +62,6 @@ export class UserResolver {
         @Arg("username") username: String,
         @Arg("email") email: String,
     ) {
-        return this._repository.isUserExist(username.toString(), email.toString())
+        return this._repository.isUserExists(username.toString(), email.toString())
     }
 }
