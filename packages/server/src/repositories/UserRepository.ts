@@ -13,7 +13,7 @@ export class UserRepository extends Repository<User> {
         const user = await this.createQueryBuilder("user")
                         .where( "user.username = :username OR user.email = :email", { username, email })
                         .getOne()
-        return user && true || false
+        return !!user
     }
 
 }

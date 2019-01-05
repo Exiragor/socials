@@ -18,7 +18,7 @@ export const checkPassword = async (password: string, hash: string) => {
 }
 
 export const generateAccessTokenSecret = async (user: User) => {
-    const secretKey = conf.get('secretKey')
+    const secretKey = conf.get('secretKey').toString()
     const secret = user.username + Date.now().toString()
     const token = await jwt.sign({ id: user.id, secret }, secretKey).toString()
 

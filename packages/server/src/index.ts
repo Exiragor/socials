@@ -6,6 +6,7 @@ import * as cors from "cors"
 import { createTypeormConn } from "./createTypeormConn"
 import { userLoader } from "./loaders/userLoader"
 import lang from "./books/lang"
+import { validateToken } from "./modules/token/helpers"
 
 const startServer = async () => {
   const dbConn = await createTypeormConn()
@@ -18,13 +19,28 @@ const startServer = async () => {
   const server = new ApolloServer({
     schema: await buildSchema({
       resolvers: [__dirname + "/modules/**/resolver.*"],
-      authChecker: ({ context }) => {
-        return context.req.headers && context.req.headers.authorization // or false if access denied
+      authChecker: async ({ context }) => {
+        const token =  context.req.headers && context.req.headers.authorization || false
+        const tokenInfo = await validateToken(token)
+
+        if (!tokenInfo) {
+          return false
+        }
+        
+        const { id, secret } = tokenInfo
+        const user = await context.userLoader.load(id)
+
+        if (user.accessSecret !== secret) {
+          return false
+        }
+
+        context.userId = id
+        return true
       },
     }),
-    context: ({ req, res }: any) => ({
+    context: ({ req }: any) => ({
       req,
-      res,
+      userId: null,
       lang,
       userLoader: userLoader()
     }),
@@ -45,20 +61,6 @@ const startServer = async () => {
       origin: "http://localhost:3000",
     })
   )
-
-//   app.use((req, _, next) => {
-//     const authorization = req.headers.authorization;
-
-//     if (authorization) {
-//       try {
-//         const qid = authorization.split(" ")[1];
-//         req.headers.cookie = `qid=${qid}`;
-//       } catch (_) {}
-//     }
-
-//     return next();
-//   });
-
 
   server.applyMiddleware({ app, cors: false }) // app is from an existing express app
 
