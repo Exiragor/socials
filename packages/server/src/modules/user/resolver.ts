@@ -3,7 +3,6 @@ import {
     Query,
     Ctx,
     Arg,
-    FieldResolver,
     Mutation,
     Authorized,
 } from "type-graphql"
@@ -22,11 +21,6 @@ export class UserResolver {
 
     constructor() {
         this._repository = getUserRepository()
-    }
-  
-    @FieldResolver()
-    accessToken(@Ctx() ctx: MyContext) {
-        return ctx.req.headers.authorization || ''
     }
   
     @Authorized()
@@ -82,10 +76,12 @@ export class UserResolver {
             const currLang = getAppLang(ctx)
             return new ApolloError(currError.message[currLang], currError.code)
         }
-        // TODO: fix problem: accessToken is empty in graph response
+
         user = await generateAccessTokenSecret(user)
         this._repository.save(user)
-        console.log(user)
+
+        ctx.userLoader.load(user.id)
+
         return user
     }
   
