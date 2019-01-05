@@ -45,11 +45,7 @@ const startServer = async () => {
       userLoader: userLoader()
     }),
     formatError: (error: GraphQLError) => {
-      if (error.originalError instanceof ApolloError) {
-        return error
-      }
-
-      return new GraphQLError(`Internal Error`)
+      return error
     },
   })
 
