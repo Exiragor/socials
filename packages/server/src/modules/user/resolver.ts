@@ -75,8 +75,8 @@ export class UserResolver {
             const currLang = getAppLang(ctx)
             return new ApolloError(currError.message[currLang], currError.code)
         }
-        // TODO: fix checkpass: always true
-        const passCorrect = checkPassword(password.toString(), user.password)
+
+        const passCorrect = await checkPassword(password.toString(), user.password)
         if (!passCorrect) {
             const currError = errorsBook.login.passwordIncorrect
             const currLang = getAppLang(ctx)

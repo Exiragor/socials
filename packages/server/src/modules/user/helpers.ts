@@ -13,8 +13,8 @@ export const prepareRegistrationDataToSave = async (user: User, data: any) => {
     return user
 }
 
-export const checkPassword = async (password: string, userPassword: string) => {
-    return await bcrypt.compare(password, userPassword)
+export const checkPassword = async (password: string, hash: string) => {
+    return await bcrypt.compare(password, hash)
 }
 
 export const generateAccessTokenSecret = async (user: User) => {
