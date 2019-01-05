@@ -85,10 +85,11 @@ export class UserResolver {
         return user
     }
   
+    @Authorized()
     @Query(() => User, { nullable: true })
-    async me() {
-        const userId = "1"
-        return userId ? await this._repository.findOne(userId) : null
+    async me(@Ctx() ctx: MyContext) {
+        const user = ctx.userLoader.load(ctx.userId)
+        return user || null
     }
 
     @Query(() => Boolean)

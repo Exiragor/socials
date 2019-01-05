@@ -32,7 +32,6 @@ export class User {
     @Column({ nullable: true })
     avatar: string
 
-    @Field()
     @Column()
     password: string
 

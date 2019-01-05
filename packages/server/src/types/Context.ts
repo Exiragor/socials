@@ -5,7 +5,7 @@ import { User } from "../entity/User"
 
 export interface MyContext {
   req: Request,
-  userId: String,
+  userId: string,
   lang: { default: string, available: [string] }
   userLoader: DataLoader<string, User>
 }
