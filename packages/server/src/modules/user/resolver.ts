@@ -35,11 +35,11 @@ export class UserResolver {
 
     @Mutation(() => String)
     async registration(
-        @Arg("username") username: String,
-        @Arg("email") email: String,
-        @Arg("password") password: String,
-        @Arg("firstname", { nullable: true }) firstname: String,
-        @Arg("lastname", { nullable: true }) lastname: String,
+        @Arg("username") username: string,
+        @Arg("email") email: string,
+        @Arg("password") password: string,
+        @Arg("firstname", { nullable: true }) firstname: string,
+        @Arg("lastname", { nullable: true }) lastname: string,
 
         @Ctx() ctx: MyContext
     ) {
@@ -58,19 +58,19 @@ export class UserResolver {
     
     @Mutation(() => User)
     async login(
-        @Arg("username") username: String,
-        @Arg("password") password: String,
+        @Arg("username") username: string,
+        @Arg("password") password: string,
 
         @Ctx() ctx: MyContext,
     ) {
-        let user: User | null = await this._repository.findOne({ username: username.toString() }) || null
+        let user: User | null = await this._repository.findOne({ username: username }) || null
         if (!user) {
             const currError = errorsBook.login.userInNotFfound
             const currLang = getAppLang(ctx)
             return new ApolloError(currError.message[currLang], currError.code)
         }
 
-        const passCorrect = await checkPassword(password.toString(), user.password)
+        const passCorrect = await checkPassword(password, user.password)
         if (!passCorrect) {
             const currError = errorsBook.login.passwordIncorrect
             const currLang = getAppLang(ctx)
@@ -94,11 +94,11 @@ export class UserResolver {
 
     @Query(() => Boolean)
     async isUserExist(
-        @Arg("username", { nullable: true }) username: String,
-        @Arg("email", { nullable: true }) email: String,
+        @Arg("username", { nullable: true }) username: string,
+        @Arg("email", { nullable: true }) email: string,
     ) {
         if (!username) username = ""
         if (!email) email = ""
-        return this._repository.isUserExists(username.toString(), email.toString())
+        return this._repository.isUserExists(username, email)
     }
 }
