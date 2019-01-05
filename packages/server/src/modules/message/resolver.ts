@@ -42,6 +42,7 @@ export class MessageResolver {
         return message
     }
 
+    @Authorized()
     @Subscription({ topics: "MESSAGE.CREATED"})
     showMessages(
         @Root() msgPayload: Message,

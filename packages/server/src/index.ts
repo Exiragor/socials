@@ -22,7 +22,7 @@ const startServer = async () => {
     schema: await buildSchema({
       resolvers: [__dirname + "/modules/**/resolver.*"],
       authChecker: async ({ context }) => {
-        const token =  context.req.headers && context.req.headers.authorization || false
+        const token =  context.req && context.req.headers && context.req.headers.authorization || context.connAuth || ""
         const tokenInfo = await validateToken(token)
 
         if (!tokenInfo) {
@@ -40,18 +40,23 @@ const startServer = async () => {
         return true
       },
     }),
-    context: ({ req }: any) => ({
+    context: ({ req, connection }: any) => ({
       req,
       userId: null,
       lang,
-      userLoader: userLoader()
+      userLoader: userLoader(),
+      connAuth: connection && connection.context.authorization || null
     }),
     formatError: (error: GraphQLError) => {
       return error
     },
-    // subscriptions: {
-    //   path: "/subs"
-    // }
+    subscriptions: {
+      onConnect: (connectionParams: any, _) => {
+        return {
+          authorization: connectionParams.authorization || null
+        }
+      }
+    }
   })
 
   app.set("trust proxy", 1)
