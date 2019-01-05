@@ -38,14 +38,14 @@ export class UserResolver {
         @Arg("username") username: String,
         @Arg("email") email: String,
         @Arg("password") password: String,
-        @Arg("firstname") firstname: String,
-        @Arg("lastname") lastname: String,
+        @Arg("firstname", { nullable: true }) firstname: String,
+        @Arg("lastname", { nullable: true }) lastname: String,
 
         @Ctx() ctx: MyContext
     ) {
         let user = await this._repository.create()
         user = await prepareRegistrationDataToSave(user, { username, email, password, firstname, lastname})
-        if (this._repository.isUserExists(user.username, user.email)) {
+        if (await this._repository.isUserExists(user.username, user.email)) {
             const currError = errorsBook.registration.userExists
             const currLang = getAppLang(ctx)
             return new ApolloError(currError.message[currLang], currError.code)
@@ -78,7 +78,7 @@ export class UserResolver {
         }
 
         user = await generateAccessTokenSecret(user)
-        this._repository.save(user)
+        await this._repository.save(user)
 
         ctx.userLoader.load(user.id)
 
@@ -88,15 +88,17 @@ export class UserResolver {
     @Authorized()
     @Query(() => User, { nullable: true })
     async me(@Ctx() ctx: MyContext) {
-        const user = ctx.userLoader.load(ctx.userId)
+        const user = await ctx.userLoader.load(ctx.userId)
         return user || null
     }
 
     @Query(() => Boolean)
     async isUserExist(
-        @Arg("username") username: String,
-        @Arg("email") email: String,
+        @Arg("username", { nullable: true }) username: String,
+        @Arg("email", { nullable: true }) email: String,
     ) {
+        if (!username) username = ""
+        if (!email) email = ""
         return this._repository.isUserExists(username.toString(), email.toString())
     }
 }

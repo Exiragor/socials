@@ -1,6 +1,7 @@
 import { ApolloServer } from "apollo-server-express"
 import { GraphQLError } from "graphql"
 import * as express from "express"
+import * as http from 'http';
 import { buildSchema } from "type-graphql"
 import * as cors from "cors"
 import { createTypeormConn } from "./createTypeormConn"
@@ -15,6 +16,7 @@ const startServer = async () => {
   }
 
   const app = express()
+  const httpServer = http.createServer(app)
 
   const server = new ApolloServer({
     schema: await buildSchema({
@@ -47,6 +49,9 @@ const startServer = async () => {
     formatError: (error: GraphQLError) => {
       return error
     },
+    // subscriptions: {
+    //   path: "/subs"
+    // }
   })
 
   app.set("trust proxy", 1)
@@ -57,12 +62,17 @@ const startServer = async () => {
       origin: "http://localhost:3000",
     })
   )
-
+  
   server.applyMiddleware({ app, cors: false }) // app is from an existing express app
+  server.installSubscriptionHandlers(httpServer) // use another server for subscriptions
 
   app.listen({ port: 4000 }, () =>
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
   )
+  
+  httpServer.listen({ port: 8000 }, () => {
+    console.log(`🚀 Subs server ready at http://localhost:8000${server.graphqlPath}`);
+  });
 }
 
 startServer()
