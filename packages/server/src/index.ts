@@ -1,4 +1,4 @@
-import { ApolloServer, ApolloError } from "apollo-server-express"
+import { ApolloServer } from "apollo-server-express"
 import { GraphQLError } from "graphql"
 import * as express from "express"
 import { buildSchema } from "type-graphql"
