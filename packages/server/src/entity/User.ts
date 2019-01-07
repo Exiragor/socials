@@ -15,6 +15,14 @@ export class User {
     id: string
 
     @Field()
+    @Column({ type: 'timestamp with local time zone'})
+    CreatedAt: Date
+
+    @Field()
+    @Column({ type: 'timestamp with local time zone'})
+    UpdatedAt: Date
+
+    @Field()
     @Column({ unique: true })
     username: string
 

@@ -63,7 +63,7 @@ export class UserResolver {
 
         @Ctx() ctx: MyContext,
     ) {
-        let user: User | null = await this._repository.findOne({ username: username }) || null
+        let user: User | null = await this._repository.findOne({ username }) || null
         if (!user) {
             const currError = errorsBook.login.userInNotFfound
             const currLang = getAppLang(ctx)

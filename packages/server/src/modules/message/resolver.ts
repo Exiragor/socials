@@ -34,7 +34,7 @@ export class MessageResolver {
 
         message.user = user
         message.text = text
-        message.createdAt = Date.now().toString()
+        message.createdAt = new Date(Date.now())
 
         await this._repository.save(message)
         await publish(message)
