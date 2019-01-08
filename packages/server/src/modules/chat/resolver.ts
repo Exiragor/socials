@@ -24,7 +24,8 @@ export class ChatResolver {
         @Arg("page") page: number,
         @Arg("count") count: number,
     ) {
-        const result = await getPaginationResult<ChatRepository, Chat>(this._repository, page, count)
+        let result = new ChatPaginationResult()
+        result = await getPaginationResult<ChatRepository, Chat, ChatPaginationResult>(result, this._repository, page, count)
         return result
     }
 }
