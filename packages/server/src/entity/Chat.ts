@@ -22,8 +22,8 @@ export class Chat {
     @Column({ type: 'timestamp'})
     createdAt: Date
 
-    @Field()
-    @Column({ type: 'timestamp'})
+    @Field({ nullable: true })
+    @Column({ type: 'timestamp', nullable: true })
     updatedAt: Date
 
     @Field()

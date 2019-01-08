@@ -18,12 +18,12 @@ export class User {
     @PrimaryGeneratedColumn()
     id: string
 
-    @Field()
+    @Field({ nullable: true })
     @Column({ type: 'timestamp'})
     createdAt: Date
 
     @Field()
-    @Column({ type: 'timestamp'})
+    @Column({ type: 'timestamp', nullable: true })
     updatedAt: Date
 
     @Field()
