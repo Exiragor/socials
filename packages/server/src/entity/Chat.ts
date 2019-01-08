@@ -2,10 +2,12 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    OneToMany
+    OneToMany,
+    ManyToMany
 } from "typeorm"
 import { ObjectType, Field, ID } from "type-graphql"
 import { Message } from "./Message";
+import { User } from "./User";
 
 @Entity()
 @ObjectType()
@@ -29,4 +31,8 @@ export class Chat {
     @Field(() => [Message])
     @OneToMany(() => Message, msg => msg.chat)
     messages: Message[]
+
+    @Field(() => [User])
+    @ManyToMany(() => User, user => user.chats)
+    users: User[]
 }
