@@ -2,7 +2,7 @@ import * as bcrypt from "bcrypt"
 import { User } from "src/entity/User"
 import * as jwt from "jsonwebtoken"
 import * as conf from "config"
-import { Status } from "src/types/Status";
+import { Status } from "../../types/Status";
 
 export const prepareRegistrationDataToSave = async (user: User, data: any) => {
     user.username = data.username

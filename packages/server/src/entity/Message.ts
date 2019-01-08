@@ -7,7 +7,7 @@ import {
 import { ObjectType, Field, ID } from "type-graphql"
 import { User } from "./User"
 import { Chat } from "./Chat";
-import { Status } from "src/types/Status";
+import { Status } from "../types/Status";
 
 @Entity()
 @ObjectType()
@@ -21,11 +21,11 @@ export class Message {
     text: string
 
     @Field()
-    @Column({ type: 'timestamp with local time zone'})
+    @Column({ type: 'timestamp'})
     createdAt: Date
 
     @Field()
-    @Column({ type: 'timestamp with local time zone'})
+    @Column({ type: 'timestamp'})
     updatedAt: Date
 
     @Field()

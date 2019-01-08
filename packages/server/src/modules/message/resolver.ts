@@ -12,7 +12,7 @@ import {
 import { Message } from "../../entity/Message"
 import { MyContext } from "../../types/Context"
 import { getMessageRepository, MessageRepository } from "../../repositories/MessageRepository"
-import { Status } from "src/types/Status";
+import { Status } from "../../types/Status";
   
 @Resolver(Message)
 export class MessageResolver {

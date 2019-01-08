@@ -9,7 +9,7 @@ import {
 import { ObjectType, Field, ID } from "type-graphql"
 import { Message } from "./Message";
 import { Chat } from "./Chat";
-import { Status } from "src/types/Status";
+import { Status } from "../types/Status";
 
 @Entity()
 @ObjectType()
@@ -19,11 +19,11 @@ export class User {
     id: string
 
     @Field()
-    @Column({ type: 'timestamp with local time zone'})
+    @Column({ type: 'timestamp'})
     createdAt: Date
 
     @Field()
-    @Column({ type: 'timestamp with local time zone'})
+    @Column({ type: 'timestamp'})
     updatedAt: Date
 
     @Field()
@@ -39,7 +39,7 @@ export class User {
     email: string
 
     @Field()
-    @Column({ type: 'timestamp without time zone'})
+    @Column({ type: 'timestamp'})
     birthDate: Date
 
     @Field(() => String, { nullable: true })
