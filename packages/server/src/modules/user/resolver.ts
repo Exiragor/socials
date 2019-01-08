@@ -38,13 +38,12 @@ export class UserResolver {
         @Arg("username") username: string,
         @Arg("email") email: string,
         @Arg("password") password: string,
-        @Arg("firstname", { nullable: true }) firstname: string,
-        @Arg("lastname", { nullable: true }) lastname: string,
+        @Arg("birthdate") birthDate: Date,
 
         @Ctx() ctx: MyContext
     ) {
         let user = await this._repository.create()
-        user = await prepareRegistrationDataToSave(user, { username, email, password, firstname, lastname})
+        user = await prepareRegistrationDataToSave(user, { username, email, password, birthDate})
         if (await this._repository.isUserExists(user.username, user.email)) {
             const currError = errorsBook.registration.userExists
             const currLang = getAppLang(ctx)

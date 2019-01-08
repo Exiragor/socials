@@ -2,13 +2,14 @@ import * as bcrypt from "bcrypt"
 import { User } from "src/entity/User"
 import * as jwt from "jsonwebtoken"
 import * as conf from "config"
+import { Status } from "src/types/Status";
 
 export const prepareRegistrationDataToSave = async (user: User, data: any) => {
     user.username = data.username
     user.email = data.email
-    if (data.firstname) user.firstname = data.firstname
-    if (data.lastname) user.lastname = data.lastname
+    user.birthDate = data.birthDate
     user.password = await bcrypt.hash(data.password, 10)
+    user.status = Status.Active
 
     return user
 }

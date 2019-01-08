@@ -12,6 +12,7 @@ import {
 import { Message } from "../../entity/Message"
 import { MyContext } from "../../types/Context"
 import { getMessageRepository, MessageRepository } from "../../repositories/MessageRepository"
+import { Status } from "src/types/Status";
   
 @Resolver(Message)
 export class MessageResolver {
@@ -32,6 +33,7 @@ export class MessageResolver {
         const message = await this._repository.create();
         const user = await ctx.userLoader.load(ctx.userId)
 
+        message.status = Status.Active
         message.user = user
         message.text = text
         message.createdAt = new Date(Date.now())
@@ -44,7 +46,7 @@ export class MessageResolver {
 
     @Authorized()
     @Subscription({ topics: "MESSAGE.CREATED"})
-    showMessages(
+    listenMessages(
         @Root() msgPayload: Message,
     ): Message {
         return msgPayload
