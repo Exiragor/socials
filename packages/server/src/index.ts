@@ -8,11 +8,20 @@ import { createTypeormConn } from "./createTypeormConn"
 import { userLoader } from "./loaders/userLoader"
 import lang from "./books/lang"
 import { validateToken } from "./modules/token/helpers"
+import * as conf from "config"
+import { runSeeds } from "./seeds";
 
 const startServer = async () => {
   const dbConn = await createTypeormConn()
   if (dbConn) {
-    await dbConn.runMigrations()
+    // usefull for dev
+    const mode = conf.get("mode")
+    if (mode == 'dev') {
+      await dbConn.runMigrations()
+      await runSeeds()
+    } else {
+      await dbConn.runMigrations()
+    }
   }
 
   const app = express()

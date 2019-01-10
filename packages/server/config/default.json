@@ -1,4 +1,5 @@
 {
+    "mode": "dev",
     "db": {
         "name": "development",
         "type": "mysql",
