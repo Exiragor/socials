@@ -5,9 +5,7 @@ import * as bcrypt from "bcrypt"
 
 export const userSeed = async () => {
     const repository = getUserRepository()
-    await makeSeed<UserRepository, User>(repository, 20, async (faker) => {
-        const user = await repository.create()
-
+    await makeSeed<UserRepository, User>(repository, 20, async (faker, user) => {
         user.username = await faker.internet.userName()
         user.email = await faker.internet.email()
         user.birthDate = await faker.date.past()
