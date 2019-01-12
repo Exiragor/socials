@@ -19,5 +19,6 @@
             "subscribersDir": "src/subscriber"
         }
     },
-    "secretKey": "secret"
+    "secretKey": "secret",
+    "origins": ["http://localhost:3000"]
 }

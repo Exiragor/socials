@@ -64,10 +64,11 @@ const startServer = async () => {
 
   app.set("trust proxy", 1)
 
+  const origins: string[] = conf.get("origins")
   app.use(
     cors({
       credentials: true,
-      origin: ["http://localhost:3000"],
+      origin: origins,
     })
   )
   
