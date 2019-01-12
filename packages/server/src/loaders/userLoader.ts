@@ -4,7 +4,7 @@ import { User } from "src/entity/User"
 
 export const userLoader = () =>
   new DataLoader(async (keys: string[]) => {
-    const users = await getUserRepository().findByIds(keys)
+    const users = await getUserRepository().findByIds(keys, { relations: ["messages"] })
 
     const userMap: { [key: string]: User } = {}
 
