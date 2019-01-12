@@ -3,13 +3,11 @@ import {
     PrimaryGeneratedColumn,
     Column,
     OneToMany,
-    ManyToMany
 } from "typeorm"
 import { ObjectType, Field, ID } from "type-graphql"
-import { Message } from "./Message";
-import { User } from "./User";
-import { Status } from "../types/Status";
-import { PaginationResult } from "../types/PaginationResult";
+import { Message } from "./Message"
+import { Status } from "../types/Status"
+import { PaginationResult } from "../types/PaginationResult"
 
 @Entity()
 @ObjectType()
@@ -45,10 +43,6 @@ export class Chat {
     @Field(() => [Message], { nullable: true })
     @OneToMany(() => Message, msg => msg.chat)
     messages: Message[]
-
-    @Field(() => [User], { nullable: true })
-    @ManyToMany(() => User, user => user.chats)
-    users: User[]
 }
 
 @ObjectType()

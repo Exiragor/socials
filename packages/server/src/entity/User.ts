@@ -3,13 +3,10 @@ import {
     PrimaryGeneratedColumn,
     Column,
     OneToMany,
-    ManyToMany,
-    JoinTable
 } from "typeorm"
 import { ObjectType, Field, ID } from "type-graphql"
-import { Message } from "./Message";
-import { Chat } from "./Chat";
-import { Status } from "../types/Status";
+import { Message } from "./Message"
+import { Status } from "../types/Status"
 
 @Entity()
 @ObjectType()
@@ -59,11 +56,7 @@ export class User {
     @Column({ nullable: true })
     accessSecret: string
 
+    @Field(() => [Message], { nullable: true })
     @OneToMany(() => Message, msg => msg.user)
     messages: Message[]
-
-    @Field(() => [Chat], { nullable: true })
-    @ManyToMany(() => Chat, chat => chat.users)
-    @JoinTable()
-    chats: Chat[]
 }

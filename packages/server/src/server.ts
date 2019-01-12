@@ -9,19 +9,13 @@ import { userLoader } from "./loaders/userLoader"
 import lang from "./books/lang"
 import { validateToken } from "./modules/token/helpers"
 import * as conf from "config"
-import { runSeeds } from "./seeds";
 
 const startServer = async () => {
   const dbConn = await createTypeormConn()
-  if (dbConn) {
+  const mode = conf.get("mode")
+  if (dbConn && mode == 'dev') {
     // usefull for dev
-    const mode = conf.get("mode")
-    if (mode == 'dev') {
       await dbConn.runMigrations()
-      await runSeeds()
-    } else {
-      await dbConn.runMigrations()
-    }
   }
 
   const app = express()
@@ -73,7 +67,7 @@ const startServer = async () => {
   app.use(
     cors({
       credentials: true,
-      origin: "http://localhost:3000",
+      origin: ["http://localhost:3000"],
     })
   )
   
