@@ -6,7 +6,7 @@ export const getPaginationResult = async <RepT extends Repository<EnT>, EnT, Res
     const skip = page - 1
     const totalCount = await rep.count()
     const totalPages = Math.ceil(totalCount / count)
-    const items = await rep.find({ skip, take: count })
+    const items = await rep.find({ skip: skip * count, take: count })
 
     result.data = items
     result.currentPage = page
