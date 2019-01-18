@@ -1,3 +1,3 @@
+import { ChatList } from '../components/ChatList'
 
-
-export default () => <div>Welcome to next.js!</div>
+export default () => <ChatList/>

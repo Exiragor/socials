@@ -1,7 +1,9 @@
 import App, { Container } from "next/app"
 import React from "react"
 import { ApolloProvider } from "react-apollo"
-import withApollo from "../helpers/withApollo"
+import withApollo from '../lib/withApollo'
+import { initStore } from '../lib/store'
+import withRedux from 'next-redux-wrapper'
 
 class MyApp extends App {
   render() {
@@ -16,4 +18,4 @@ class MyApp extends App {
   }
 }
 
-export default withApollo(MyApp)
+export default withApollo(withRedux(initStore)(MyApp))

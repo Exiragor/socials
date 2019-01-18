@@ -1,7 +1,6 @@
 import {
     Resolver,
     Arg,
-    Authorized,
     Query
 } from "type-graphql"
 import { Chat, ChatPaginationResult } from "../../entity/Chat"
@@ -18,7 +17,6 @@ export class ChatResolver {
         this._repository = getChatRepository()
     }
   
-    @Authorized()
     @Query(() => ChatPaginationResult)
     async chatList(
         @Arg("page") page: number,
