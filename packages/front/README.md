@@ -1,5 +1,9 @@
-[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/zeit/next.js/tree/master/examples/with-apollo-and-redux)
-# Apollo & Redux Example
+[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/zeit/next.js/tree/master/examples/with-apollo)
+# Apollo Example
+
+## Demo
+
+https://next-with-apollo.now.sh
 
 ## How to use
 
@@ -8,9 +12,9 @@
 Execute [`create-next-app`](https://github.com/segmentio/create-next-app) with [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) or [npx](https://github.com/zkat/npx#readme) to bootstrap the example:
 
 ```bash
-npx create-next-app --example with-apollo-and-redux with-apollo-and-redux-app
+npx create-next-app --example with-apollo with-apollo-app
 # or
-yarn create next-app --example with-apollo-and-redux with-apollo-and-redux-app
+yarn create next-app --example with-apollo with-apollo-app
 ```
 
 ### Download manually
@@ -18,8 +22,8 @@ yarn create next-app --example with-apollo-and-redux with-apollo-and-redux-app
 Download the example:
 
 ```bash
-curl https://codeload.github.com/zeit/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/with-apollo-and-redux
-cd with-apollo-and-redux
+curl https://codeload.github.com/zeit/next.js/tar.gz/canary | tar -xz --strip=2 next.js-canary/examples/with-apollo
+cd with-apollo
 ```
 
 Install it and run:
@@ -39,19 +43,15 @@ now
 ```
 
 ## The idea behind the example
-This example serves as a conduit if you were using Apollo 1.X with Redux, and are migrating to Apollo 2.x, however, you have chosen not to manage your entire application state within Apollo (`apollo-link-state`).
 
-In 2.0.0, Apollo serves out-of-the-box support for redux in favor of Apollo's state management. This example aims to be an amalgamation of the [`with-apollo`](https://github.com/zeit/next.js/tree/master/examples/with-apollo) and [`with-redux`](https://github.com/zeit/next.js/tree/master/examples/with-redux) examples.
+[Apollo](https://www.apollographql.com/client/) is a GraphQL client that allows you to easily query the exact data you need from a GraphQL server. In addition to fetching and mutating data, Apollo analyzes your queries and their results to construct a client-side cache of your data, which is kept up to date as further queries and mutations are run, fetching more results from the server.
 
-Note that you can access the redux store like you normally would using `react-redux`'s `connect`. Here's a quick example:
+In this simple example, we integrate Apollo seamlessly with Next by wrapping our *pages/_app.js* inside a [higher-order component (HOC)](https://facebook.github.io/react/docs/higher-order-components.html). Using the HOC pattern we're able to pass down a central store of query result data created by Apollo into our React component hierarchy defined inside each page of our Next application.
 
-```js
-const mapStateToProps = state => ({
-  location: state.form.location,
-});
+On initial page load, while on the server and inside `getInitialProps`, we invoke the Apollo method,  [`getDataFromTree`](https://www.apollographql.com/docs/react/features/server-side-rendering.html#getDataFromTree). This method returns a promise; at the point in which the promise resolves, our Apollo Client store is completely initialized.
 
-export default withRedux(connect(mapStateToProps, null)(Index));
-```
+This example relies on [graph.cool](https://www.graph.cool) for its GraphQL backend.
 
-### Note:
-In these *with-apollo* examples, the ```withData()``` HOC must wrap a top-level component from within the ```pages``` directory. Wrapping a child component with the HOC will result in a ```Warning: Failed prop type: The prop 'serverState' is marked as required in 'WithData(Apollo(Component))', but its value is 'undefined'``` error. Down-tree child components will have access to Apollo, and can be wrapped with any other sort of ```graphql()```, ```compose()```, etc HOC's.
+
+Note: Do not be alarmed that you see two renders being executed.  Apollo recursively traverses the React render tree looking for Apollo query components. When it has done that, it fetches all these queries and then passes the result to a cache. This cache is then used to render the data on the server side (another React render).
+https://www.apollographql.com/docs/react/features/server-side-rendering.html#getDataFromTree

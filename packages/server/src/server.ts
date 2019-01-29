@@ -59,7 +59,8 @@ const startServer = async () => {
           authorization: connectionParams.authorization || null
         }
       }
-    }
+    },
+    debug: true
   })
 
   app.set("trust proxy", 1)

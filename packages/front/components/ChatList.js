@@ -2,9 +2,10 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
 const GET_CHATS = gql`
-    query ChatList {
-        chatList($count: Float!, $page: Float!) {
+    query ChatList($count: Float!, $page: Float!) {
+        chatList(count: $count, page: $page) {
             data {
+                id
                 name
                 picture
             }
@@ -20,20 +21,23 @@ const GetChatVars = {
     page: 1
 }
 
+const renderChatList = (chats) => 
+    chats.map(({id, name, picture}) => (
+        <li key={id}>
+            <img style={{ width: '100px' }} src={ picture } alt={ name } />
+            { name }
+        </li>
+    ))
+
 export const ChatList = () => (
-  <Query query={GET_CHATS} variables={{GetChatVars}}>
+  <Query query={GET_CHATS} variables={GetChatVars}>
     {({ loading, error, data }) => {
         if (loading) return "Loading...";
         if (error) return `Error! ${error.message}`;
-    
-        let chats = []
-        for (let chat of data.data) {
-            chats.push(<li>{ chat.picture }{ chat.name }</li>)
-        }
 
         return (
             <div>
-                <ul>{ chats }</ul>
+                <ul>{renderChatList(data.chatList.data)}</ul>
             </div>
         );
     }}
