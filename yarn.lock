@@ -620,6 +620,12 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.2.0":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.3.1.tgz#574b03e8e8a9898eaf4a872a92ea20b7846f6f2a"
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0.tgz#c2bc9870405959c89a9c814376a2ecb247838c80"
@@ -4090,6 +4096,12 @@ hoist-non-react-statics@^3.0.0:
   dependencies:
     react-is "^16.3.2"
 
+hoist-non-react-statics@^3.2.1:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
+  dependencies:
+    react-is "^16.7.0"
+
 hosted-git-info@^2.1.4, hosted-git-info@^2.6.0:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
@@ -4294,7 +4306,7 @@ inquirer@^6.2.0:
     strip-ansi "^5.0.0"
     through "^2.3.6"
 
-invariant@^2.2.2:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   dependencies:
@@ -5016,7 +5028,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   dependencies:
@@ -5422,6 +5434,10 @@ negotiator@0.6.1:
 neo-async@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
+
+next-redux-wrapper@^3.0.0-alpha.0:
+  version "3.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-3.0.0-alpha.0.tgz#7bbf86c9826f7289c314d8e7bc06dd9ec4ead324"
 
 next@latest:
   version "7.0.2"
@@ -6344,9 +6360,20 @@ react-error-overlay@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.0.tgz#d198408a85b4070937a98667f500c832f86bd5d4"
 
-react-is@^16.3.2:
+react-is@^16.3.2, react-is@^16.6.3, react-is@^16.7.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.7.0.tgz#c1bd21c64f1f1364c6f70695ec02d69392f41bfa"
+
+react-redux@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-6.0.0.tgz#09e86eeed5febb98e9442458ad2970c8f1a173ef"
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    hoist-non-react-statics "^3.2.1"
+    invariant "^2.2.4"
+    loose-envify "^1.4.0"
+    prop-types "^15.6.2"
+    react-is "^16.6.3"
 
 react@^16.7.0:
   version "16.7.0"
@@ -6494,6 +6521,21 @@ redent@^2.0.0:
   dependencies:
     indent-string "^3.0.0"
     strip-indent "^2.0.0"
+
+redux-devtools-extension@^2.13.7:
+  version "2.13.7"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.7.tgz#14bd7a1a7c8bee7f397beb1116fd16fc9633b752"
+
+redux-thunk@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
+
+redux@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
+  dependencies:
+    loose-envify "^1.4.0"
+    symbol-observable "^1.2.0"
 
 reflect-metadata@^0.1.12:
   version "0.1.12"
@@ -7254,7 +7296,7 @@ supports-color@^5.2.0, supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-symbol-observable@^1.0.2, symbol-observable@^1.0.4:
+symbol-observable@^1.0.2, symbol-observable@^1.0.4, symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
