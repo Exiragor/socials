@@ -21,7 +21,13 @@ const GetChatVars = {
     page: 1
 }
 
-const renderChatList = (chats) => 
+class chatObj {
+    id: string
+    name: string
+    picture: string
+}
+
+const renderChatList = (chats: chatObj[]) => 
     chats.map(({id, name, picture}) => (
         <li key={id}>
             <img style={{ width: '100px' }} src={ picture } alt={ name } />

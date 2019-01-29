@@ -2,9 +2,14 @@ import React from 'react'
 import initApollo from './init-apollo'
 import Head from 'next/head'
 import { getDataFromTree } from 'react-apollo'
+import { ApolloClient, NormalizedCacheObject } from 'apollo-boost'
+import { isBrowser } from './isBrowser'
+
 
 export default App => {
   return class Apollo extends React.Component {
+    apolloClient: ApolloClient<NormalizedCacheObject> | null
+
     static displayName = 'withApollo(App)'
     static async getInitialProps (ctx) {
       const { Component, router } = ctx
@@ -16,8 +21,8 @@ export default App => {
 
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
-      const apollo = initApollo()
-      if (!process.browser) {
+      const apollo = initApollo({})
+      if (!isBrowser) {
         try {
           // Run all GraphQL queries
           await getDataFromTree(

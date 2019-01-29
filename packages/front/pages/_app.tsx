@@ -5,7 +5,7 @@ import { ApolloProvider } from 'react-apollo'
 
 class MyApp extends App {
   render () {
-    const { Component, pageProps, apolloClient } = this.props
+    const { Component, pageProps, apolloClient } = this.props as any
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
