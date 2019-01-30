@@ -4,25 +4,21 @@ import withApolloClient from '../lib/with-apollo-client'
 import { ApolloProvider } from 'react-apollo'
 import withRedux from 'next-redux-wrapper'
 import { initStore } from '../lib/store'
-import { setChats } from '../store/chats/actions'
+import { Provider } from 'react-redux'
 
 class MyApp extends App {
   render () {
-    const { Component, pageProps, apolloClient } = this.props as any
+    const { Component, pageProps, apolloClient, store } = this.props as any
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
         </ApolloProvider>
       </Container>
     )
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setChats: chats => {
-    dispatch(setChats(chats))
-  },
- });
-
-export default withApolloClient(withRedux(initStore, null, mapDispatchToProps)(MyApp))
+export default withApolloClient(withRedux(initStore)(MyApp))

@@ -1,5 +1,8 @@
 import gql from "graphql-tag"
 import { Query } from "react-apollo"
+import { connect } from 'react-redux'
+import {} from '../store/user/actions'
+import { setChats } from '../store/chats/actions'
 
 const GET_CHATS = gql`
     query ChatList($count: Float!, $page: Float!) {
@@ -18,7 +21,7 @@ const GET_CHATS = gql`
 
 const GetChatVars = {
     count: 5,
-    page: 1
+    page: 2
 }
 
 type chatObj = {
@@ -35,11 +38,13 @@ const renderChatList = (chats: chatObj[]) =>
         </li>
     ))
 
-export const ChatList = () => (
+export const ChatList = connect()(({ dispatch }) => (
   <Query query={GET_CHATS} variables={GetChatVars}>
     {({ loading, error, data }) => {
         if (loading) return "Loading..."
         if (error) return `Error! ${error.message}`
+        
+        dispatch(setChats(data.chatList.data))
 
         return (
             <div>
@@ -48,4 +53,4 @@ export const ChatList = () => (
         );
     }}
   </Query>
-);
+));
