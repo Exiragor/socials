@@ -80,8 +80,8 @@ const startServer = async () => {
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
   )
   
-  httpServer.listen({ port: 8000 }, () => {
-    console.log(`🚀 Subs server ready at http://localhost:8000${server.graphqlPath}`);
+  httpServer.listen({ port: 4080 }, () => {
+    console.log(`🚀 Subs server ready at http://localhost:4080${server.graphqlPath}`);
   });
 }
 

@@ -36,7 +36,7 @@ export class User {
     email: string
 
     @Field()
-    @Column({ type: 'timestamp'})
+    @Column({ type: 'timestamp', nullable: true})
     birthDate: Date
 
     @Field(() => String, { nullable: true })
