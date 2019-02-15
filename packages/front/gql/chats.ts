@@ -7,6 +7,7 @@ export const QUERY_CHAT_LSIT = gql`
                 id
                 name
                 picture
+                description
             }
             totalCount
             currentPage

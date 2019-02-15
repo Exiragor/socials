@@ -1,6 +1,10 @@
 <template>
-    <div>
-        <chat-card v-for="chat in chats" :chat="chat" :key="chat.id" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" v-for="chat in chats" :key="chat.id">
+                <chat-card :chat="chat"/>
+            </div>
+        </div>
     </div>
 </template>
 

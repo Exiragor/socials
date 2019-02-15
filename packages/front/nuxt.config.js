@@ -56,7 +56,7 @@ export default {
   /*
   ** Build configuration
   */
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/scss/app.scss"],
   build: {},
   modules: [
     "@nuxtjs/axios",
