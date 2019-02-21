@@ -27,7 +27,7 @@ export default {
       `http://${host}:${port}`
   },
   head: {
-    title: "tt1",
+    title: "chats",
     meta: [
       { charset: "utf-8" },
       {
@@ -38,7 +38,7 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: "Nuxt.js project"
+        content: "Social chats"
       }
     ],
     link: [

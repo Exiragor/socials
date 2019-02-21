@@ -30,3 +30,9 @@ export interface Chat {
   picture: string;
   description: string;
 }
+
+export interface Link {
+    path: string;
+    text: string;
+    show: boolean;
+}

@@ -10,14 +10,8 @@ import {
   Component,
   Vue
 } from "nuxt-property-decorator"
-import { State, Action } from "vuex-class"
 import { Person } from "~/types";
-import Card from "~/components/Card.vue"
 
-@Component({
-  components: {
-    Card
-  }
-})
+@Component({})
 export default class extends Vue {}
 </script>
