@@ -10,7 +10,6 @@ import {
   Component,
   Vue
 } from "nuxt-property-decorator"
-import { Person } from "~/types";
 
 @Component({})
 export default class extends Vue {}

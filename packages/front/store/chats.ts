@@ -1,4 +1,4 @@
-import {Person, ChatsState, Chat} from "~/types";
+import {ChatsState, Chat} from "~/types";
 import { MutationTree, ActionTree } from "vuex";
 import { ApolloClient, NormalizedCacheObject } from 'apollo-boost'
 import {QUERY_CHAT_LIST} from "~/gql";

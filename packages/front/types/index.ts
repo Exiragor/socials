@@ -1,14 +1,10 @@
 export * from './state';
 
-export interface Person {
+export interface User {
   id: number;
-  first_name: string;
-  last_name: string;
-  contact: Contact;
-  gender: string;
-  ip_address: string;
-  avatar: string;
-  address: Address;
+  username: string;
+  email: string;
+  birthdate: string;
 }
 
 export interface Contact {
