@@ -2,7 +2,7 @@
     <div class="chats">
         <h1>Chats:</h1>
         <chat-list :chats="chats" />
-        <pagination :last-page="lastPage" :current-page="curentPage" v-model="page" />
+        <pagination :last-page="lastPage" :current-page="currentPage" v-model="page" />
     </div>
 </template>
 
@@ -37,12 +37,12 @@ export default class ChatsListPage extends Vue {
         this.loadChats();
     }
 
-    get curentPage(): number {
+    get currentPage(): number {
         return +this.$route.params['page'];
     }
 
     loadChats(): void {
-        this.loadChatsAction({ count: this.count, page: this.curentPage });
+        this.loadChatsAction({ count: this.count, page: this.currentPage });
     }
 
     @Watch('page')

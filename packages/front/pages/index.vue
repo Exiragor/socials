@@ -1,13 +1,7 @@
 <template>
-  <section>
-    <h1 class="header">Nuxt TypeScript Starter</h1>
-    <div class="cards">
-      <Card
-        v-for="person in people"
-        :key="person.id"
-        :person="person"
-      ></Card>
-    </div>
+  <section class="container text-center">
+    <h1 class="header">Social chats</h1>
+    <p>Just login for use chats, or if u haven't account registration</p>
   </section>
 </template>
 
@@ -25,18 +19,5 @@ import Card from "~/components/Card.vue"
     Card
   }
 })
-export default class extends Vue {
-  @State people: Person
-}
+export default class extends Vue {}
 </script>
-
-<style scoped>
-.header {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-}
-</style>

@@ -1,10 +1,15 @@
 <template>
-    <div class="card">
-        <img :src="chat.picture" :alt="chat.name" class="card-img-top">
-        <div class="card-body">
-            <h5 class="card-title">{{ chat.name }}</h5>
-            <p class="card-text">{{ chat.description }}</p>
-            <a href="#" class="btn btn-primary">Join(todo)</a>
+    <div class="row no-gutters">
+        <div class="col-md-4">
+            <img :src="chat.picture" :alt="chat.name" class="card-img">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ chat.name }}</h5>
+                <p class="card-text">{{ chat.description }}</p>
+                <p class="card-text"><small class="text-muted">1000 members</small></p>
+                <a href="#" class="btn btn-primary">Join(todo)</a>
+            </div>
         </div>
     </div>
 </template>
