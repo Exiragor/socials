@@ -43,7 +43,7 @@ export class UserResolver {
         @Ctx() ctx: MyContext
     ) {
         let user = await this._repository.create()
-        user = await prepareRegistrationDataToSave(user, { username, email, password, birthDate})
+        user = await prepareRegistrationDataToSave(user, { username, email, password, birthDate })
         if (await this._repository.isUserExists(user.username, user.email)) {
             const currError = errorsBook.registration.userExists
             const currLang = getAppLang(ctx)

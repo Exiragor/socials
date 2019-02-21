@@ -4,12 +4,16 @@ import * as express from "express"
 import * as http from 'http';
 import { buildSchema } from "type-graphql"
 import * as cors from "cors"
+import { createTypeormConn } from "./createTypeormConn"
 import { userLoader } from "./loaders/userLoader"
 import lang from "./books/lang"
 import { validateToken } from "./modules/token/helpers"
 import * as conf from "config"
 
 const startServer = async () => {
+  // init connection
+  await createTypeormConn()
+
   const app = express()
   const httpServer = http.createServer(app)
 
