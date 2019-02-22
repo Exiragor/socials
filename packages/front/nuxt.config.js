@@ -63,6 +63,11 @@ export default {
     '@nuxtjs/apollo',
     "~/modules/typescript.js",
   ],
+  plugins: [
+      '~/plugins/eventbus',
+      '~/plugins/notifications',
+      '~/plugins/vuelidate'
+  ],
   axios: {},
   apollo: {
     clientConfigs: {
