@@ -44,6 +44,9 @@
         email: string = '';
         password: string = '';
 
+        // default
+        $bus: Vue;
+
         async registration() {
             let res = await this.registrationAction({
                 birthdate: this.birthDate,
@@ -51,8 +54,12 @@
                 email: this.email,
                 password: this.password
             })
-            console.log(res)
-            return false
+            if (res.data.registration) {
+                this.$bus.$emit('notify', {text: "Registration is done", type: 'success'})
+            }
+            if (res.errors) {
+                this.$bus.$emit('notify', {text: res.errors.message, type: 'error'})
+            }
         }
     }
 </script>

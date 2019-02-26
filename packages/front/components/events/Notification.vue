@@ -13,7 +13,7 @@
 
         // default
         $notify: any;
-        $bus: any;
+        $bus: Vue;
 
         created() {
             this.$bus.$on('notify', data => {
@@ -26,6 +26,10 @@
                 }
                 this.$notify(obj)
             })
+        }
+
+        beforeDestroy() {
+            this.$bus.$off('notify')
         }
     }
 </script>
