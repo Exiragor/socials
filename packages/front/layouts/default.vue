@@ -2,6 +2,7 @@
   <div>
     <nav-component />
     <nuxt/>
+    <notification-event />
   </div>
 </template>
 
@@ -11,10 +12,12 @@
         Vue
     } from "nuxt-property-decorator";
     import NavComponent from '../components/header/Nav'
+    import NotificationEvent from '../components/events/Notification'
 
     @Component({
         components: {
-            NavComponent
+            NavComponent,
+            NotificationEvent
         }
     })
     export default class DefaultLayout extends Vue {}
