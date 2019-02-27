@@ -18,10 +18,10 @@
     } from 'nuxt-property-decorator';
 
     @Component({})
-    export default class extends Vue {
+    export default class BaseInput extends Vue {
         @Prop({ default: () => ''}) value: string | number;
         @Prop({ default: () => ''}) placeholder: string | number;
-        @Prop({ default: () => 'text'}) type: string = 'text';
+        @Prop({ default: () => 'text'}) type: string;
         @Prop({ required: true }) id: string | number
     }
 </script>
