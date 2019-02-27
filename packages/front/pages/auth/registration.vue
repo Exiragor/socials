@@ -2,18 +2,9 @@
     <section class="container">
         <h1 class="text-center">Регистрация:</h1>
         <div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input v-model="email" type="email" class="form-control" id="email" aria-describedby="emailHelp">
-            </div>
-            <div class="form-group">
-                <label for="username">Имя пользователя</label>
-                <input v-model="username" type="text" class="form-control" id="username">
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль</label>
-                <input v-model="password" type="password" class="form-control" id="password">
-            </div>
+            <base-input v-model="email" id="email">Email</base-input>
+            <base-input v-model="username" id="username">Имя пользователя</base-input>
+            <base-input type="password" v-model="password" id="password">Пароль</base-input>
             <div class="form-group">
                 <label>Дата рождения</label>
                 <date-picker v-model="birthDate" />
@@ -30,10 +21,12 @@
     } from 'nuxt-property-decorator';
     import { Action } from 'vuex-class'
     import DatePicker from 'vuejs-datepicker';
+    import BaseInput from '../../components/form/BaseInput'
 
     @Component({
         components: {
-            DatePicker
+            DatePicker,
+            BaseInput
         }
     })
     export default class extends Vue {
