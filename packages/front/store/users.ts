@@ -16,9 +16,14 @@ export const mutations: MutationTree<UsersState> = {
 export const actions: ActionTree<UsersState, UsersState> = {
     async registration({}, {username, email, password, birthdate}) {
         let client: ApolloClient<NormalizedCacheObject> = (this as any).app.apolloProvider.defaultClient;
-         return await client.mutate({
-            mutation: MUTATION_REGISTRATION,
-            variables: { username, email, password, birthdate }
-        });
+        try {
+            return await client.mutate({
+                mutation: MUTATION_REGISTRATION,
+                variables: {username, email, password, birthdate}
+            });
+        } catch (e) {
+            console.error(e.message)
+            return { error: e.message.split('GraphQL error: ')[1] }
+        }
     }
 };

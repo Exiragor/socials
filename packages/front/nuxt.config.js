@@ -70,6 +70,9 @@ export default {
   ],
   axios: {},
   apollo: {
+    errorHandler (error) {
+        console.error(error.message);
+    },
     clientConfigs: {
         default: {
             httpEndpoint: 'http://localhost:4000/graphql',

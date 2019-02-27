@@ -53,12 +53,12 @@
                 username: this.username,
                 email: this.email,
                 password: this.password
-            })
-            if (res.data.registration) {
-                this.$bus.$emit('notify', {text: "Registration is done", type: 'success'})
+            });
+            if (res.data && res.data.registration) {
+                this.$bus.$emit('notify', {text: "Registration is done", type: 'success'});
             }
-            if (res.errors) {
-                this.$bus.$emit('notify', {text: res.errors.message, type: 'error'})
+            if (res.error) {
+                this.$bus.$emit('notify', {text: res.error, type: 'error'});
             }
         }
     }
