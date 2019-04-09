@@ -44,7 +44,7 @@
         }
         & .nav-link {
             color: #cbbde2;
-            &.nuxt-link-active {
+            &.nuxt-link-exact-active {
                 font-weight: 500;
                 color: white;
             }

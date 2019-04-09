@@ -39,9 +39,6 @@
         email: string = '';
         password: string = '';
 
-        // default
-        $bus: Vue;
-
         async registration() {
             let res = await this.registrationAction({
                 birthdate: this.birthDate,

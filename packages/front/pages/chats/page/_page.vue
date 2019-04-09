@@ -14,7 +14,6 @@ import {
     Watch
 } from "nuxt-property-decorator";
 import { Action, State } from 'vuex-class'
-import { Route } from "vue-router"
 import ChatList from '~/components/chats/List'
 import Pagination from "../../../components/catalog/Pagination";
 
@@ -30,7 +29,6 @@ export default class ChatsListPage extends Vue {
     @Action('chats/loadChats') loadChatsAction;
 
     count: number = 4;
-    $route: Route;
     page: number = 0;
 
     created() {
