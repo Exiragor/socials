@@ -1,7 +1,7 @@
 import {User, UsersState} from "~/types";
 import { MutationTree, ActionTree } from "vuex";
 import { ApolloClient, NormalizedCacheObject } from 'apollo-boost'
-import {MUTATION_REGISTRATION} from "~/gql";
+import {MUTATION_LOGIN, MUTATION_REGISTRATION} from "~/gql";
 
 export const state = (): UsersState => ({
     me: null
@@ -21,6 +21,22 @@ export const actions: ActionTree<UsersState, UsersState> = {
                 mutation: MUTATION_REGISTRATION,
                 variables: {username, email, password, birthdate}
             });
+        } catch (e) {
+            console.error(e.message)
+            return { error: e.message.split('GraphQL error: ')[1] }
+        }
+    },
+    async login({commit}, { username, password}) {
+        let client: ApolloClient<NormalizedCacheObject> = (this as any).app.apolloProvider.defaultClient;
+        try {
+            let res: any = await client.mutate({
+                mutation: MUTATION_LOGIN,
+                variables: {username, password}
+            });
+            if (res.data && res.data.login) {
+                commit('setMe', res.data.login)
+            }
+            return res
         } catch (e) {
             console.error(e.message)
             return { error: e.message.split('GraphQL error: ')[1] }

@@ -52,6 +52,7 @@
             if (res.error) {
                 this.$bus.$emit('notify', {text: res.error, type: 'error'});
             }
+            this.$router.push({ name: 'auth-login'});
         }
     }
 </script>
