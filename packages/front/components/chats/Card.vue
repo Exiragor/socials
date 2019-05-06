@@ -1,5 +1,5 @@
 <template>
-    <div class="row no-gutters">
+    <div class="row no-gutters chat">
         <div class="col-md-4">
             <img :src="chat.picture" :alt="chat.name" class="card-img">
         </div>
@@ -31,12 +31,6 @@ export default class ChatCard extends Vue {
 
 <style lang="scss" scoped>
 .chat {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    & img {
-        max-width: 100px;
-        margin-right: 25px;
-    }
+    border-bottom: 1px solid black;
 }
 </style>

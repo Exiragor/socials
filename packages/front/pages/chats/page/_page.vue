@@ -1,6 +1,6 @@
 <template>
-    <div class="chats">
-        <h1>Chats:</h1>
+    <div class="chats container">
+        <h1 class="mb-md-3">Chats:</h1>
         <chat-list :chats="chats" />
         <pagination :last-page="lastPage" :current-page="currentPage" v-model="page" />
     </div>
@@ -31,7 +31,7 @@ export default class ChatsListPage extends Vue {
     count: number = 4;
     page: number = 0;
 
-    created() {
+    mounted() {
         this.loadChats();
     }
 

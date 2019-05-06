@@ -18,9 +18,9 @@ export const mutations: MutationTree<ChatsState> = {
 };
 
 export const actions: ActionTree<ChatsState, ChatsState> = {
-    async loadChats({commit}, {count, page}) {
+    async loadChats({commit, state}, {count, page}) {
         let client: ApolloClient<NormalizedCacheObject> = (this as any).app.apolloProvider.defaultClient;
-        let { data } = await client.query({ query: QUERY_CHAT_LIST, variables: { count, page }});
+        let { data }  = await client.query({ query: QUERY_CHAT_LIST, variables: { count, page }}) as any;
         commit('setChats', data.chatList.data);
         commit('setLastPage', data.chatList.totalPages);
     }

@@ -1,14 +1,22 @@
 <template>
     <ul class="nav p-2 mb-3">
-        <li class="nav-item" v-for="link in links" :key="link.path">
-            <router-link v-if="link.show" class="nav-link" :to="link.path">{{ link.text }}</router-link>
-        </li>
-        <li class="nav-item nav-item--right">
-            <router-link class="nav-link" to="/auth/login">Войти</router-link>
-        </li>
         <li class="nav-item">
-            <router-link class="nav-link" to="/auth/registration">Регистрация</router-link>
+            <router-link class="nav-link" to="/">Главная</router-link>
         </li>
+        <li class="nav-item" v-if="user">
+            <router-link class="nav-link" to="/chats/page/1">Чаты</router-link>
+        </li>
+        <li class="nav-item nav-item--right" v-if="user">
+            <router-link class="nav-link" to="/auth/logout">Выйти</router-link>
+        </li>
+        <template v-else>
+            <li class="nav-item nav-item--right">
+                <router-link class="nav-link" to="/auth/login">Войти</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link" to="/auth/registration">Регистрация</router-link>
+            </li>
+        </template>
     </ul>
 </template>
 
@@ -18,21 +26,11 @@
         Vue
     } from 'nuxt-property-decorator';
     import {Link} from "../../types";
+    import { State } from "vuex-class"
 
     @Component({})
     export default class Nav extends Vue {
-        links: Link[] = [
-            {
-                path: '/',
-                text: 'Главная',
-                show: true
-            },
-            {
-                path: '/profile',
-                text: 'Профиль',
-                show: false
-            }
-        ];
+        @State(state => state.users.me) user
     }
 </script>
 

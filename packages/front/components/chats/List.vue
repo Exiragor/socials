@@ -1,9 +1,7 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 mb-md-5" v-for="chat in chats" :key="chat.id">
-                <chat-card :chat="chat"/>
-            </div>
+    <div class="row">
+        <div class="col-md-6 mb-md-5" v-for="chat in chats" :key="chat.id">
+            <chat-card :chat="chat"/>
         </div>
     </div>
 </template>

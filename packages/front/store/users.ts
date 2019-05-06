@@ -2,6 +2,7 @@ import {User, UsersState} from "~/types";
 import { MutationTree, ActionTree } from "vuex";
 import { ApolloClient, NormalizedCacheObject } from 'apollo-boost'
 import {MUTATION_LOGIN, MUTATION_REGISTRATION} from "~/gql";
+import Vue from 'vue'
 
 export const state = (): UsersState => ({
     me: null
@@ -33,8 +34,9 @@ export const actions: ActionTree<UsersState, UsersState> = {
                 mutation: MUTATION_LOGIN,
                 variables: {username, password}
             });
-            if (res.data && res.data.login) {
+            if (res && res.data && res.data.login) {
                 commit('setMe', res.data.login)
+                // Vue.$cookie.set('apollo-token', res.data.login.accessToken, 1);
             }
             return res
         } catch (e) {

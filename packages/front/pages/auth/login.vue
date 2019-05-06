@@ -2,14 +2,8 @@
     <section class="container">
         <div class="d-flex justify-content-center">
             <div>
-                <div class="form-group">
-                    <label for="username">Имя пользователя</label>
-                    <input type="text" v-model="username" class="form-control" id="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" v-model="password" class="form-control" id="password">
-                </div>
+                <base-input v-model="username" id="username">Имя пользователя</base-input>
+                <base-input type="password" v-model="password" id="password">Пароль</base-input>
                 <button type="submit" class="btn btn-primary" @click="login">Войти</button>
             </div>
         </div>
@@ -22,8 +16,13 @@
         Vue
     } from 'nuxt-property-decorator';
     import { Action } from 'vuex-class'
+    import BaseInput from '../../components/form/BaseInput';
 
-    @Component({})
+    @Component({
+        components: {
+            BaseInput
+        }
+    })
     export default class extends Vue {
         @Action('users/login') loginAction;
 

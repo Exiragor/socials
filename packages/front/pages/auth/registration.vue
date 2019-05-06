@@ -2,7 +2,7 @@
     <section class="container">
         <h1 class="text-center">Регистрация:</h1>
         <div>
-            <email-input v-model="email" />
+            <email-input id="at-test" v-model="email" />
             <base-input v-model="username" id="username">Имя пользователя</base-input>
             <base-input type="password" v-model="password" id="password">Пароль</base-input>
             <div class="form-group">

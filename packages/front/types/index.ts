@@ -30,5 +30,5 @@ export interface Chat {
 export interface Link {
     path: string;
     text: string;
-    show: boolean;
+    show: () => boolean;
 }
