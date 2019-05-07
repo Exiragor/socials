@@ -48,11 +48,11 @@
             });
             if (res.data && res.data.registration) {
                 this.$bus.$emit('notify', {text: "Registration is done", type: 'success'});
+                this.$router.push({ name: 'auth-login'});
             }
             if (res.error) {
                 this.$bus.$emit('notify', {text: res.error, type: 'error'});
             }
-            this.$router.push({ name: 'auth-login'});
         }
     }
 </script>

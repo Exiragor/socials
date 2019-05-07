@@ -10,6 +10,9 @@ export const state = (): UsersState => ({
 export const mutations: MutationTree<UsersState> = {
     setMe(state: UsersState, user: User): void {
         state.me = user
+    },
+    clearMe(state: UsersState) {
+        state.me = null
     }
 };
 
@@ -56,5 +59,8 @@ export const actions: ActionTree<UsersState, UsersState> = {
             console.error(e.message)
             return { error: e.message.split('GraphQL error: ')[1] }
         }
+    },
+    logout ({commit}) {
+        commit('clearMe')
     }
 };
