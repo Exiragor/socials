@@ -74,7 +74,6 @@ export default {
         console.error(error.message);
     },
     clientConfigs: {
-        authenticationType: '',
         default: {
             httpEndpoint: 'http://localhost:4000/graphql',
             wsEndpoint: 'ws://localhost:4080/graphql',
