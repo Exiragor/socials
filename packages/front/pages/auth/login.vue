@@ -37,6 +37,7 @@
             if (res.error) {
                 this.$bus.$emit('notify', {text: res.error, type: 'error'});
             }
+            this.$apolloHelpers.onLogin(res.data.login.accessToken)
             this.$router.push({ path: '/'});
         }
     }

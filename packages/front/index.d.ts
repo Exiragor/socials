@@ -11,5 +11,6 @@ declare module 'vue/types/vue' {
         $route: Route
         $router: VueRouter
         $bus: VueDef
+        $apolloHelpers: any
     }
 }

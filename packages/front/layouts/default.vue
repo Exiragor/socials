@@ -13,6 +13,7 @@
     } from "nuxt-property-decorator";
     import NavComponent from '../components/header/Nav'
     import NotificationEvent from '../components/events/Notification'
+    import { Action } from 'vuex-class'
 
     @Component({
         components: {
@@ -20,5 +21,13 @@
             NotificationEvent
         }
     })
-    export default class DefaultLayout extends Vue {}
+    export default class DefaultLayout extends Vue {
+        @Action('users/getMe') getMeAction;
+
+        async created() {
+            if (this.$apolloHelpers.getToken()) {
+                await this.getMeAction()
+            }
+        }
+    }
 </script>

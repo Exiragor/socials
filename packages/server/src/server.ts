@@ -21,7 +21,8 @@ const startServer = async () => {
     schema: await buildSchema({
       resolvers: [__dirname + "/modules/**/resolver.*"],
       authChecker: async ({ context }) => {
-        const token =  context.req && context.req.headers && context.req.headers.authorization || context.connAuth || ""
+        const bearerToken =  context.req && context.req.headers && context.req.headers.authorization || context.connAuth || ""
+        const token = bearerToken.split(" ")[1];
         const tokenInfo = await validateToken(token)
 
         if (!tokenInfo) {

@@ -31,7 +31,7 @@ export default class ChatsListPage extends Vue {
     count: number = 4;
     page: number = 0;
 
-    mounted() {
+    created() {
         this.loadChats();
     }
 

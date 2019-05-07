@@ -1,8 +1,7 @@
 import {User, UsersState} from "~/types";
 import { MutationTree, ActionTree } from "vuex";
-import { ApolloClient, NormalizedCacheObject } from 'apollo-boost'
-import {MUTATION_LOGIN, MUTATION_REGISTRATION} from "~/gql";
-import Vue from 'vue'
+import { getClient } from '~/helpers/store'
+import {MUTATION_LOGIN, MUTATION_REGISTRATION, QUERY_GET_ME} from "~/gql";
 
 export const state = (): UsersState => ({
     me: null
@@ -16,7 +15,7 @@ export const mutations: MutationTree<UsersState> = {
 
 export const actions: ActionTree<UsersState, UsersState> = {
     async registration({}, {username, email, password, birthdate}) {
-        let client: ApolloClient<NormalizedCacheObject> = (this as any).app.apolloProvider.defaultClient;
+        let client = getClient(this)
         try {
             return await client.mutate({
                 mutation: MUTATION_REGISTRATION,
@@ -28,7 +27,7 @@ export const actions: ActionTree<UsersState, UsersState> = {
         }
     },
     async login({commit}, { username, password}) {
-        let client: ApolloClient<NormalizedCacheObject> = (this as any).app.apolloProvider.defaultClient;
+        let client = getClient(this)
         try {
             let res: any = await client.mutate({
                 mutation: MUTATION_LOGIN,
@@ -36,7 +35,21 @@ export const actions: ActionTree<UsersState, UsersState> = {
             });
             if (res && res.data && res.data.login) {
                 commit('setMe', res.data.login)
-                // Vue.$cookie.set('apollo-token', res.data.login.accessToken, 1);
+            }
+            return res
+        } catch (e) {
+            console.error(e.message)
+            return { error: e.message.split('GraphQL error: ')[1] }
+        }
+    },
+    async getMe ({commit}) {
+        let client = getClient(this)
+        try {
+            let res: any = await client.query({
+                query: QUERY_GET_ME,
+            });
+            if (res && res.data && res.data.me) {
+                commit('setMe', res.data.me)
             }
             return res
         } catch (e) {
