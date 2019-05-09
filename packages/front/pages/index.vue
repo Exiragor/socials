@@ -12,9 +12,10 @@ import {
   Vue
 } from "nuxt-property-decorator"
 import { State } from "vuex-class"
+import {User} from "../types";
 
 @Component({})
 export default class extends Vue {
-    @State(state => state.users.me) user
+    @State(state => state.users.me) user: User
 }
 </script>

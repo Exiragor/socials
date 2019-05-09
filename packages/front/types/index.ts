@@ -5,6 +5,10 @@ export interface User {
   username: string;
   email: string;
   birthdate: string;
+  avatar: string;
+  accessToken: string;
+  status: string;
+  nickname: string;
 }
 
 export interface Contact {

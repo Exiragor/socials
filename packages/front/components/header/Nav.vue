@@ -6,9 +6,14 @@
         <li class="nav-item" v-if="user">
             <router-link class="nav-link" to="/chats/page/1">Чаты</router-link>
         </li>
-        <li class="nav-item nav-item--right" v-if="user">
-            <router-link class="nav-link" to="/auth/logout">Выйти</router-link>
-        </li>
+        <template v-if="user">
+            <li class="nav-item nav-item--right">
+                <router-link class="nav-link" to="/profile">{{ user.nickname || user.username }}</router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link" to="/auth/logout">Выйти</router-link>
+            </li>
+        </template>
         <template v-else>
             <li class="nav-item nav-item--right">
                 <router-link class="nav-link" to="/auth/login">Войти</router-link>
@@ -25,12 +30,12 @@
         Component,
         Vue
     } from 'nuxt-property-decorator';
-    import {Link} from "../../types";
+    import {Link, User} from "../../types";
     import { State } from "vuex-class"
 
     @Component({})
     export default class Nav extends Vue {
-        @State(state => state.users.me) user
+        @State(state => state.users.me) user: User
     }
 </script>
 

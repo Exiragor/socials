@@ -100,4 +100,23 @@ export class UserResolver {
         if (!email) email = ""
         return this._repository.isUserExists(username, email)
     }
+
+    @Authorized()
+    @Mutation(() => Boolean)
+    async changeUserField(
+        @Arg("fieldName") fieldName: string,
+        @Arg("newValue") newValue: string,
+        @Ctx() ctx: MyContext
+    ) {
+        const user = await ctx.userLoader.load(ctx.userId)
+        let res: any = null
+
+        if (user.hasOwnProperty(fieldName)) {
+            user[fieldName] = newValue
+            const userRepository = getUserRepository()
+            res = await userRepository.update(user.id, user)
+        }
+
+        return res && res.raw && res.raw.changedRows || false
+    }
 }

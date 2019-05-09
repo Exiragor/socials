@@ -6,6 +6,7 @@
             class="form-control"
             :id="id"
             @input="$emit('input', $event.target.value)"
+            :placeholder="placeholder"
         >
     </div>
 </template>
