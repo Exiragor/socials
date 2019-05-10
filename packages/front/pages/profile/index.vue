@@ -16,7 +16,7 @@
         Component,
         Vue
     } from "nuxt-property-decorator"
-    import { State } from "vuex-class"
+    import { State, Action } from "vuex-class"
     import {User} from "../../types";
     import BaseInput from '../../components/form/BaseInput';
 
@@ -26,7 +26,8 @@
         }
     })
     export default class extends Vue {
-        @State(state => state.users.me) user: User
+        @State(state => state.users.me) user: User;
+        @Action('users/changeField') changeFieldAction;
 
         nicknameTmp: string = ''
         newPassword: string = ''
@@ -40,8 +41,18 @@
             this.nicknameTmp = value
         }
 
-        save() {
-
+        async save() {
+            let res: any = null
+            if (this.newPassword !== this.rePassword) {
+                this.$bus.$emit('notify', {text: "Пароли должны совпадать", type: 'error'})
+                return
+            }
+            if (this.nicknameTmp !== '') {
+                res = await this.changeFieldAction('nickname', this.nicknameTmp)
+            }
+            console.log(res)
+            if (res && res.data && res.data.changeUserField)
+                this.$bus.$emit('notify', {text: "Данные успешно обновлены", type: 'success'})
         }
     }
 </script>

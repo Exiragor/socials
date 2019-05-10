@@ -1,7 +1,7 @@
 import {User, UsersState} from "~/types";
 import { MutationTree, ActionTree } from "vuex";
 import { getClient } from '~/helpers/store'
-import {MUTATION_LOGIN, MUTATION_REGISTRATION, QUERY_GET_ME} from "~/gql";
+import {MUTATION_LOGIN, MUTATION_REGISTRATION, QUERY_GET_ME, MUTATION_CHANGE_USER_FIELD} from "~/gql";
 
 export const state = (): UsersState => ({
     me: null
@@ -13,6 +13,10 @@ export const mutations: MutationTree<UsersState> = {
     },
     clearMe(state: UsersState) {
         state.me = null
+    },
+    changeField(state: UsersState, { fieldName, newValue }) {
+        if (state.me != null)
+            state.me[fieldName] = newValue
     }
 };
 
@@ -62,5 +66,21 @@ export const actions: ActionTree<UsersState, UsersState> = {
     },
     logout ({commit}) {
         commit('clearMe')
+    },
+    async changeField({commit}, { fieldName, newValue }) {
+        let client = getClient(this)
+        try {
+            let res: any = await client.mutate({
+                mutation: MUTATION_CHANGE_USER_FIELD,
+                variables: {fieldName, newValue}
+            });
+            if (res && res.data && res.data.changeUserField) {
+                commit('changeField', { fieldName, newValue })
+            }
+            return res
+        } catch (e) {
+            console.error(e.message)
+            return { error: e.message.split('GraphQL error: ')[1] }
+        }
     }
 };

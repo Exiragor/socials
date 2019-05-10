@@ -14,3 +14,15 @@ export const QUERY_GET_ME = gql`
           }
     }
 `;
+
+export const MUTATION_CHANGE_USER_FIELD = gql`
+    mutation ChangeUserField(
+        $newValue: String!,
+        $fieldName: String!,
+    ) {
+        changeUserField(
+            newValue: $newValue,
+            fieldName: $fieldName,
+        )
+    }
+`;
